@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.10...3.20)
+project(MPI LANGUAGES CXX VERSION 1.0)
+add_subdirectory(MPIHelloWorld)
+add_subdirectory(MPIBasicComm)
+add_subdirectory(MPIDistributedSum)
+
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+if(NOT MSVC)
+add_custom_target(runHello COMMAND MPIHelloWorld DEPENDS MPIHelloWorld)
+endif()
