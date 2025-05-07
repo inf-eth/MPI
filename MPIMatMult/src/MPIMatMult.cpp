@@ -147,7 +147,7 @@ int main(int argc, char** argv)
 		cout << "Hello from processor " << processor_name << " with rank " << world_rank << " of " << world_size << "; istart: " << istart << ", iend: " << iend << endl;
 
 		// Matrix multiplication
-		//#pragma omp parallel for
+		#pragma omp parallel for
 		for (int i=istart; i<iend; i++)
 		{
 			for (int j=0; j<cB; j++)

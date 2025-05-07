@@ -1,4 +1,5 @@
 add_executable(MPIHelloWorld MPIHelloWorld.cpp)
+set_target_properties(MPIMatMult PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
 
 find_package(MPI REQUIRED)
 if(NOT MPI_CXX_FOUND)

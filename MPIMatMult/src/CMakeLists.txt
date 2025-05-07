@@ -1,4 +1,5 @@
 add_executable(MPIMatMult MPIMatMult.cpp)
+set_target_properties(MPIMatMult PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
 
 find_package(MPI REQUIRED)
 if(NOT MPI_CXX_FOUND)
@@ -28,5 +29,5 @@ endif()
 # Command: $(MSMPI_BIN)\mpiexec
 # Command arguments: -n 4 "$(TargetPath)"
 set_target_properties(MPIMatMult PROPERTIES VS_DEBUGGER_COMMAND           "$(MSMPI_BIN)mpiexec"
-                                              VS_DEBUGGER_COMMAND_ARGUMENTS "-n 17 ..\\src\\$(Configuration)\\MPIMatMult")
+                                              VS_DEBUGGER_COMMAND_ARGUMENTS "-n 5 ..\\src\\$(Configuration)\\MPIMatMult")
 											  
