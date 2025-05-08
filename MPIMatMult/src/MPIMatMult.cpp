@@ -81,7 +81,7 @@ int main(int argc, char** argv)
 		cout << "Time taken (omp): " << Clock.ElapsedTime() << " ms." << endl;
 		displayMat(C,rA,cB);
 
-		cout << "Hello from processor " << processor_name << " with rank " << world_rank << " of " << world_size << endl;
+		cout << "Master/root process at " << processor_name << ", world size: " << world_size << endl;
 
 		Clock.Start();
 		// Send matrix sizes and matrices A, B
@@ -115,7 +115,7 @@ int main(int argc, char** argv)
 
 		displayMat(mpiC, rA, cB);
 
-		cout << "Matrix diff C and mpiC: " << diffMat(C, mpiC, rA, cB);
+		cout << "Matrix diff C and mpiC: " << diffMat(C, mpiC, rA, cB) << endl;
 
 		delete[] A;
 		delete[] B;
@@ -144,8 +144,9 @@ int main(int argc, char** argv)
 		MPI_Recv(&istart, 1, MPI_INT, 0, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 		MPI_Recv(&iend, 1, MPI_INT, 0, 2, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
-		cout << "Hello from processor " << processor_name << " with rank " << world_rank << " of " << world_size << "; istart: " << istart << ", iend: " << iend << endl;
+		cout << processor_name << ", rank: " << world_rank << " of " << world_size << "; istart: " << istart << ", iend: " << iend << endl;
 
+		Clock.Start();
 		// Matrix multiplication
 		#pragma omp parallel for
 		for (int i=istart; i<iend; i++)
@@ -160,6 +161,9 @@ int main(int argc, char** argv)
 		}
 		// Send my part of matrix C back to root
 		MPI_Send(mpiC+(istart*cB), (iend-istart)*cB, MPI_FLOAT, 0, 3, MPI_COMM_WORLD);
+		Clock.Stop();
+
+		cout << processor_name << ", rank: " << world_rank << " of " << world_size << "; time: " << Clock.ElapsedTime() << " ms." << endl;
 
 		delete[] A;
 		delete[] B;
