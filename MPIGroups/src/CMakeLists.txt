@@ -17,13 +17,13 @@ endif()
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 if(NOT MSVC)
 if(${NVIDIA_HPCX})
-add_custom_target(run COMMAND mpirun -n 8 -mca coll_hcoll_enable 0 ./${PROJECT_NAME} DEPENDS ${PROJECT_NAME})
+add_custom_target(run COMMAND mpirun -n 8 --oversubscribe -mca coll_hcoll_enable 0 ./${PROJECT_NAME} DEPENDS ${PROJECT_NAME})
 else()
-add_custom_target(run COMMAND mpirun -n 8 ./${PROJECT_NAME} DEPENDS ${PROJECT_NAME})
+add_custom_target(run COMMAND mpirun -n 8 --oversubscribe ./${PROJECT_NAME} DEPENDS ${PROJECT_NAME})
 endif()
 endif()
 
 # Command: $(MSMPI_BIN)\mpiexec
 # Command arguments: -n 8 "$(TargetPath)"
 set_target_properties(${PROJECT_NAME} PROPERTIES VS_DEBUGGER_COMMAND           "$(MSMPI_BIN)mpiexec"
-                                              VS_DEBUGGER_COMMAND_ARGUMENTS "-n 8 ..\\src\\$(Configuration)\\${PROJECT_NAME}")
+                                              VS_DEBUGGER_COMMAND_ARGUMENTS "-n 8 --oversubscribe ..\\src\\$(Configuration)\\${PROJECT_NAME}")
