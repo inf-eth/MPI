@@ -26,4 +26,4 @@ endif()
 # Command: $(MSMPI_BIN)\mpiexec
 # Command arguments: -n 8 "$(TargetPath)"
 set_target_properties(${PROJECT_NAME} PROPERTIES VS_DEBUGGER_COMMAND           "$(MSMPI_BIN)mpiexec"
-                                              VS_DEBUGGER_COMMAND_ARGUMENTS "-n 8 --oversubscribe ..\\src\\$(Configuration)\\${PROJECT_NAME}")
+                                              VS_DEBUGGER_COMMAND_ARGUMENTS "-n 8 ..\\src\\$(Configuration)\\${PROJECT_NAME}")

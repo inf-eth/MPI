@@ -43,8 +43,13 @@ int main(int argc, char** argv)
 
 	MPI_Comm_create(MPI_COMM_WORLD, local_group, &local_comm);
 	MPI_Group_rank(local_group, &local_rank);
-
 	cout << "Hello from processor " << processor_name << " with rank " << world_rank << " of " << world_size << ", local_rank: " << local_rank << endl;
+
+	// local reduction of ranks
+	int local_sum;
+	MPI_Reduce(&world_rank, &local_sum, 1, MPI_INT, MPI_SUM, 0, local_comm);
+	if (local_rank==0)
+		cout << "rank: " << world_rank << ", world rank group sum: " << local_sum << endl;
 
 	delete[] Ranks1;
 	delete[] Ranks2;
